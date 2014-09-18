@@ -1,0 +1,33 @@
+<h1>Listing toys</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document number</th>
+      <th>Excerpts</th>
+      <th>Html url</th>
+      <th>Type</th>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @toys.each do |toy| %>
+      <tr>
+        <td><%= toy.document_number %></td>
+        <td><%= toy.excerpts %></td>
+        <td><%= toy.html_url %></td>
+        <td><%= toy.type %></td>
+        <td><%= toy.title %></td>
+        <td><%= link_to 'Show', toy(:n_code) %></td>
+        <td><%= link_to 'Edit', edit_toy_path(toy) %></td>
+        <td><%= link_to 'Destroy', toy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Toy', new_n_code_toy_path %>
