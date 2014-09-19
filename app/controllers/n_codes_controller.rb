@@ -1,6 +1,5 @@
 class NCodesController < ApplicationController
   require 'federal_register'
-  require 'JSON'
 
   before_action :set_n_code, only: [:show, :edit, :update, :destroy]
 
@@ -27,6 +26,7 @@ class NCodesController < ApplicationController
   # POST /n_codes
   # POST /n_codes.json
   def create
+    binding.pry
     @n_code = NCode.new(n_code_params)
 
     r = FederalRegister::Article.search(:conditions => {:term => @n_code.term})

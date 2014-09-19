@@ -1,0 +1,13 @@
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/log/*.log.*
+/log/*.lck
+/log
+/tmp
+chromedriver.log
+libpeerconnection.log
+dump.rdb
+
+# Local user files and directories
+NOTES.md
+public/uploads
