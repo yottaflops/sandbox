@@ -26,33 +26,22 @@ class NCodesController < ApplicationController
   # POST /n_codes
   # POST /n_codes.json
   def create
-    binding.pry
     @n_code = NCode.new(n_code_params)
+    article = FederalRegister::Article.search(:conditions => {:term => @n_code.term})
+    results = article.results
+    toys = Array.new
+    results.each do |result|
+      toy = Toy.new
+      toy.document_number = result.document_number
+      toy.html_url = result.html_url
+      toy.type = result.type
+      toy.title = result.title
+      toy.save
 
-    r = FederalRegister::Article.search(:conditions => {:term => @n_code.term})
-    r.results.each do |a|
-      #Toy#create accepts :document_number, :excerpts, :html_url, :type, :title
-      params[:document_number] = a.document_number
-      params[:html_url] = a.html_url
-      params[:type] = a.type
-      params[:title] = a.title
-      # params[:n_code_id] = @n_code[:id]
-      redirect_to new_n_code_toy_path(:n_code_id, @a, params) and return 
-
-      end
-
-    respond_to do |format|
-      if @n_code.save
-        format.html { redirect_to @n_code, notice: 'N code was successfully created.' }
-        format.json { render :show, status: :created, location: @n_code }
-      else
-        format.html { render :new }
-        format.json { render json: @n_code.errors, status: :unprocessable_entity }
-      end
+      toys << toy
     end
 
-
-
+    render json: toys, status: 201
   end
 
   # PATCH/PUT /n_codes/1
